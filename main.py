@@ -1,11 +1,12 @@
+import os
 import discord
 from discord.ext import commands
 
-# Intents（ボットに許可する権限）の設定
+# ボットに必要な権限（Intents）の設定
 intents = discord.Intents.default()
 intents.message_content = True
 intents.guilds = True
-intents.voice_states = True  # ボイスチャンネルの状態取得に必須
+intents.voice_states = True  # ボイスチャンネルの参加に必須
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -29,6 +30,6 @@ async def on_ready():
 async def ping(ctx):
     await ctx.send("Pong!")
 
-# ここに自分のDiscord Botのトークンを貼り付ける
-TOKEN = "83f65b7627bd84e1766172ffb370df5b1debd4003b9f4611939cc3b5ea2be19b"
+# Renderの環境変数からトークンを安全に読み込む
+TOKEN = os.environ.get("DISCORD_TOKEN")
 bot.run(TOKEN)
